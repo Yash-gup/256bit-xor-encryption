@@ -1,0 +1,38 @@
+import random
+
+msg=input("Enter The message: ")
+encryption_level= 256//8
+encryption_char=''
+
+for i in range(0x00,0xFF):
+    encryption_char += chr(i)
+
+key=''
+for c in range(encryption_level):
+    key += random.choice(encryption_char)
+
+cipher_text = ''
+key_index=0
+max = encryption_level-1
+for char in msg:
+    cipher_index = ord(char) ^ ord(key[key_index])
+    cipher_text += chr(cipher_index)
+    if key_index >= max:
+        key_index = 0
+    else:
+        key_index += 1
+
+print(cipher_text)
+
+decrypt_text = ''
+key_index=0
+
+for char in cipher_text:
+    decrypt_index = ord(char) ^ ord(key[key_index])
+    decrypt_text += chr(decrypt_index)
+    if key_index >= max:
+        key_index = 0
+    else:
+        key_index += 1
+
+print(decrypt_text)
